@@ -1,10 +1,11 @@
 "use client";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { updateSetup } from "@/app/actions/updateSetup";
+import { UploadButton } from "@uploadthing/react";
 
 export default function EditSetupCard({ setup }: { setup: any }) {
   const [description, setDescription] = useState(setup.description);
@@ -33,12 +34,7 @@ export default function EditSetupCard({ setup }: { setup: any }) {
           placeholder="Describe the default setup..."
           rows={4}
         />
-        <label className="font-semibold">Image URL</label>
-        <Input
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-          placeholder="https://example.com/image.jpg"
-        />
+        <label className="font-semibold">Image</label>
         {imageUrl && (
           <img
             src={imageUrl}
@@ -46,6 +42,13 @@ export default function EditSetupCard({ setup }: { setup: any }) {
             className="w-full rounded border mt-2"
           />
         )}
+        <UploadButton
+          endpoint="setupImage"
+          onClientUploadComplete={(res) => {
+            if (res && res[0]?.url) setImageUrl(res[0].url);
+          }}
+          onUploadError={(error) => alert(`Upload failed: ${error.message}`)}
+        />
         <Button onClick={handleSave} disabled={saving}>
           {saving ? "Saving..." : "Save"}
         </Button>
