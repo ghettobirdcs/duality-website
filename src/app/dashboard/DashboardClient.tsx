@@ -1,72 +1,45 @@
 "use client";
-import { UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
-import { useEffect, useState } from "react";
+import { UserButton, useUser } from "@clerk/nextjs";
+import Spinner from "@/components/Spinner";
 
-interface DashboardClientProps {
-  userData: {
-    user: {
-      username?: string | null;
-      firstName?: string | null;
-    };
-    discordId?: string | null;
-    discordUsername?: string | null;
-  } | null;
+interface Player {
+  id: number;
+  name: string;
+  discordId: string;
+  role?: string | null;
 }
 
-export default function DashboardClient({ userData }: DashboardClientProps) {
-  const [hydratedUser, setHydratedUser] = useState(userData);
-
-  useEffect(() => {
-    fetch("/api/discord-info")
-      .then(res => res.json())
-      .then(data => {
-        if (!data.error) {
-          setHydratedUser({
-            user: {
-              username: data.username,
-              firstName: data.firstName,
-            },
-            discordId: data.discordId,
-            discordUsername: data.discordUsername,
-          });
-        }
-      });
-  }, []);
-
-  const isSignedIn = !!hydratedUser?.discordId;
-  const displayName =
-    hydratedUser?.discordUsername ||
-    hydratedUser?.user.username ||
-    hydratedUser?.user.firstName ||
-    "user";
-  const discordId = hydratedUser?.discordId ?? "Not linked";
+export default function DashboardClient({
+  playerList,
+}: {
+  playerList: Player[];
+}) {
+  const { user } = useUser();
 
   return (
     <>
-      <SignedIn>
-        <div className="user-button-topright">
-          <UserButton
-            appearance={{
-              elements: { avatarBox: { width: 48, height: 48 } },
-            }}
-            afterSignOutUrl="/"
-          />
+      <div className="user-button-topright">
+        <UserButton
+          afterSignOutUrl="/"
+          appearance={{
+            elements: { avatarBox: { width: 48, height: 48 } },
+          }}
+        />
+      </div>
+      <div className="fullpage-center">
+        <div className="header-box">
+          <h1>Dashboard</h1>
+          <h2>Players</h2>
+          <ul>
+            {playerList.map((player) => (
+              <li key={player.id}>
+                {player.name} (Discord ID: {player.discordId})
+                {player.role ? ` - ${player.role}` : ""}
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="fullpage-center">
-          <div className="header-box">
-            <h1>Welcome, {displayName}</h1>
-            <p>Your Discord ID: {discordId}</p>
-          </div>
-          {/* Your dashboard content goes here */}
-        </div>
-      </SignedIn>
-      <SignedOut>
-        <div className="fullpage-center">
-          <div className="header-box">
-            <h1>Please sign in to view your dashboard.</h1>
-          </div>
-        </div>
-      </SignedOut>
+      </div>
     </>
   );
 }
