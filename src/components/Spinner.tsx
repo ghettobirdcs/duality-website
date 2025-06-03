@@ -11,14 +11,11 @@ export default function Spinner() {
     setMounted(true);
   }, []);
 
-  // Optionally, skip SSR rendering entirely
-  if (!mounted) return null;
-
   return (
     <FontAwesomeIcon
       icon={faSpinner}
       spin
-      style={{ color: "#ffe066", fontSize: "2.5rem" }} // consistent size
+      style={{ color: "#fff", fontSize: "2.2rem" }} // consistent size
       aria-label="Loading"
     />
   );

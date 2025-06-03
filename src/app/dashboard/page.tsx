@@ -15,6 +15,7 @@ export default async function DashboardPage() {
       </div>
     );
   }
+
   const playerList = await db.select().from(players);
 
   return (
