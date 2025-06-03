@@ -1,12 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Orbitron', Arial, sans-serif;
+}
+
 body {
   margin: 0;
   background: #191919;
   color: #ffe066;
-  font-family: 'Orbitron', Arial, sans-serif;
   min-height: 100vh;
   background: #191919 url('/background.png') no-repeat center center fixed;
   background-size: cover;
-  /* Add a faint overlay using a pseudo-element if you want even more subtlety */
   position: relative;
 }
 
@@ -18,6 +25,11 @@ body::before {
   background: rgba(25, 25, 25, 0.7);
   /* subtle dark overlay for contrast */
   pointer-events: none;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0 !important;
 }
 
 .fullpage-center {
@@ -87,4 +99,61 @@ h1 {
   right: 2.5rem;
   z-index: 100;
   background: transparent;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard--secondary {
+  display: flex;
+  flex-direction: row;
+  width: 85%;
+  gap: 32px;
+}
+
+.dashboard__title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  font-size: 28px;
+  margin-top: 32px;
+  margin-bottom: 16px;
+}
+
+.dashboard__container {
+  display: inline-block;
+  background: #222;
+  border-radius: 12px;
+  padding: 2rem 3rem;
+  box-shadow: 0 4px 24px rgba(255, 214, 0, 0.16);
+  margin-top: 32px;
+  width: 85%;
+  text-align: center;
+}
+
+.dashboard__container--list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.maps {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.dashboard__container--item:hover {
+  color: #ffd600;
+  text-shadow: 0 0 8px #fffbe6, 0 0 24px #ffd600;
+  transition: all 300ms ease;
+  cursor: pointer;
+}
+
+.dashboard__container--title {
+  margin-top: 0;
 }

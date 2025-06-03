@@ -26,18 +26,49 @@ export default function DashboardClient({
           }}
         />
       </div>
-      <div className="fullpage-center">
-        <div className="header-box">
-          <h1>Dashboard</h1>
-          <h2>Players</h2>
-          <ul>
-            {playerList.map((player) => (
-              <li key={player.id}>
-                {player.name} (Discord ID: {player.discordId})
-                {player.role ? ` - ${player.role}` : ""}
-              </li>
-            ))}
+      <div className="dashboard">
+        <h1 className="dashboard__title">Dashboard</h1>
+        <h2 className="dashboard__container">
+          <ul className="dashboard__container--list maps">
+            <li className="dashboard__container--item">Mirage</li>
+            <li className="dashboard__container--item">Dust2</li>
+            <li className="dashboard__container--item">Inferno</li>
+            <li className="dashboard__container--item">Ancient</li>
+            <li className="dashboard__container--item">Anubis</li>
+            <li className="dashboard__container--item">Vertigo</li>
+            <li className="dashboard__container--item">Nuke</li>
           </ul>
+        </h2>
+        <div className="dashboard--secondary">
+          <h2 className="dashboard__container">
+            <ul className="dashboard__container--list">
+              {playerList.map((player) => (
+                <li className="dashboard__container--item" key={player.id}>
+                  {player.role ? `${player.role} - ` : ""}
+                  {player.name}
+                </li>
+              ))}
+            </ul>
+          </h2>
+          <h2 className="dashboard__container">
+            <ul className="dashboard__container--list">
+              <li className="dashboard__title dashboard__container--title">
+                Notes
+              </li>
+              <li className="dashboard__container--item">
+                *Link to .txt file*
+              </li>
+            </ul>
+          </h2>
+          <h2 className="dashboard__container schedule">
+            <ul className="dashboard__container--list">
+              <li className="dashboard__title dashboard__container--title">
+                Schedule
+              </li>
+              <li>Tuesday 9:30PM EST - Practice</li>
+              <li>Thursday 9:30PM EST - Scrim</li>
+            </ul>
+          </h2>
         </div>
       </div>
     </>
