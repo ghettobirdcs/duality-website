@@ -1,6 +1,7 @@
 "use client";
 import { UserButton, useUser } from "@clerk/nextjs";
 import Spinner from "@/components/Spinner";
+import Link from "next/link";
 
 interface Player {
   id: number;
@@ -30,13 +31,27 @@ export default function DashboardClient({
         <h1 className="dashboard__title">Dashboard</h1>
         <h2 className="dashboard__container">
           <ul className="dashboard__container--list maps">
-            <li className="dashboard__container--item">Mirage</li>
-            <li className="dashboard__container--item">Dust2</li>
-            <li className="dashboard__container--item">Inferno</li>
-            <li className="dashboard__container--item">Ancient</li>
-            <li className="dashboard__container--item">Anubis</li>
-            <li className="dashboard__container--item">Vertigo</li>
-            <li className="dashboard__container--item">Nuke</li>
+            <li className="dashboard__container--item">
+              <Link href="/maps/mirage">Mirage</Link>
+            </li>
+            <li className="dashboard__container--item">
+              <Link href="/maps/dust2">Dust2</Link>
+            </li>
+            <li className="dashboard__container--item">
+              <Link href="/maps/inferno">Inferno</Link>
+            </li>
+            <li className="dashboard__container--item">
+              <Link href="/maps/ancient">Ancient</Link>
+            </li>
+            <li className="dashboard__container--item">
+              <Link href="/maps/anubis">Anubis</Link>
+            </li>
+            <li className="dashboard__container--item">
+              <Link href="/maps/vertigo">Vertigo</Link>
+            </li>
+            <li className="dashboard__container--item">
+              <Link href="/maps/nuke">Nuke</Link>
+            </li>
           </ul>
         </h2>
         <div className="dashboard--secondary">
@@ -65,8 +80,8 @@ export default function DashboardClient({
               <li className="dashboard__title dashboard__container--title">
                 Schedule
               </li>
-              <li>Tuesday 9:30PM EST - Practice</li>
-              <li>Thursday 9:30PM EST - Scrim</li>
+              <li className="text-xl">Tuesday 9:30PM EST - Practice</li>
+              <li className="text-xl">Thursday 9:30PM EST - Scrim</li>
             </ul>
           </h2>
         </div>
