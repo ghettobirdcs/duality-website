@@ -1,13 +1,12 @@
-/* Import a nice Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 
 :root {
-  --background: #16181d;
-  --foreground: #f7f7fa;
-  --primary: #3498db;
-  --secondary: #23252b;
+  --background: #111111;
+  --foreground: #fffbe7;
+  --primary: #ffd600;
+  --secondary: #191919;
   --border-radius: 10px;
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.28);
 }
 
 html,
@@ -16,83 +15,127 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: 'Orbitron', Arial, sans-serif;
   background: var(--background);
   color: var(--foreground);
+  position: relative;
+  overflow-x: hidden;
 }
 
 body {
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100vw;
 }
 
-main {
-  background: var(--secondary);
-  padding: 2.5rem 2rem 2rem 2rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  min-width: 340px;
-  max-width: 90vw;
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url('/background.png') center center / cover no-repeat;
+  opacity: 0.08;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Center everything vertically and horizontally */
+.fullpage-center {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  position: relative;
+  background: transparent;
+}
+
+.header-box {
+  width: 80vw;
+  max-width: 1000px;
+  margin: 0 auto 1.5rem auto;
+  background: transparent;
   text-align: center;
 }
 
 h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 1.25rem;
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 0 0 2rem 0;
   color: var(--primary);
+  letter-spacing: 2px;
+  text-shadow: 0 2px 14px #0008;
 }
 
-button,
 .clerk-sign-in-button,
-.clerk-user-button {
-  margin: 0.75rem;
-  padding: 0.75rem 1.5rem;
+.dashboard-btn,
+button {
+  display: block;
+  width: 60vw;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 1.2rem 0;
   border-radius: var(--border-radius);
   border: none;
   background: var(--primary);
-  color: var(--foreground);
-  font-size: 1rem;
-  font-weight: 600;
+  color: #191919;
+  font-size: 1.3rem;
+  font-weight: 900;
+  font-family: 'Orbitron', Arial, sans-serif;
   cursor: pointer;
-  transition: background 0.2s;
-  box-shadow: 0 2px 12px rgba(52, 152, 219, 0.20);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 18px rgba(255, 214, 0, 0.16);
+  outline: none;
 }
 
-button:hover,
 .clerk-sign-in-button:hover,
-.clerk-user-button:hover {
-  background: #217dbb;
+.dashboard-btn:hover,
+button:hover {
+  background: #ffe066;
+  color: #111;
+  box-shadow: 0 6px 24px rgba(255, 214, 0, 0.24);
+}
+
+.user-button-topright {
+  position: fixed;
+  top: 2rem;
+  right: 2.5rem;
+  z-index: 100;
+  background: transparent;
+}
+
+@media (max-width: 600px) {
+  .user-button-topright {
+    top: 1rem;
+    right: 1rem;
+  }
 }
 
 a {
   color: var(--primary);
   text-decoration: none;
   transition: color 0.2s;
+  font-weight: 600;
 }
 
 a:hover {
-  color: #217dbb;
+  color: #fffbe7;
   text-decoration: underline;
 }
 
-/* Clerk UI overrides for better matching */
-.clerk-sign-in-button,
-.clerk-user-button {
-  display: inline-block;
-  background: var(--primary);
-  color: var(--foreground);
-}
+@media (max-width: 900px) {
 
-@media (max-width: 480px) {
-  main {
-    padding: 1.2rem 0.7rem;
-    min-width: 0;
+  .header-box,
+  .clerk-sign-in-button,
+  button {
+    width: 95vw;
+    max-width: 100vw;
   }
 
   h1 {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 }
