@@ -1,57 +1,53 @@
 "use client";
-import { SignInButton, UserButton } from "@clerk/nextjs";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
-interface LandingClientProps {
-  userData: {
-    user: {
-      username?: string | null;
-      firstName?: string | null;
-    };
-    discordId?: string | null;
-    discordUsername?: string | null;
-  } | null;
-}
-
-export default function Home({ userData }: LandingClientProps) {
+export default function LandingClient() {
   const router = useRouter();
-  const isSignedIn = !!userData;
+  const { user, isSignedIn, isLoaded } = useUser();
 
-  if (userData) {
-    const { discordUsername } = userData;
-  }
+  // While Clerk is loading, show nothing or a spinner
+  if (!isLoaded) return null;
 
   return (
-    <>
-      {isSignedIn && (
-        <div className="user-button-topright">
+    <div>
+      <div className="user-button-topright">
+        <SignedIn>
           <UserButton
             appearance={{
               elements: { avatarBox: { width: 48, height: 48 } },
             }}
             afterSignOutUrl="/"
           />
-        </div>
-      )}
+        </SignedIn>
+      </div>
       <div className="fullpage-center">
         <div className="header-box">
           <h1>
-            {isSignedIn
-              ? `Welcome, ${discordUsername ?? user?.username ?? user?.firstName ?? "user"}`
-              : "Welcome to the Duality HUB"}
+            <SignedIn>
+              {`Welcome, ${user?.username ?? user?.firstName ?? "user"}`}
+            </SignedIn>
+            <SignedOut>Welcome to the Duality HUB</SignedOut>
           </h1>
         </div>
-        {!isSignedIn ? (
-          <SignInButton />
-        ) : (
+        <SignedOut>
+          <SignInButton mode="modal" />
+        </SignedOut>
+        <SignedIn>
           <button
             className="dashboard-btn"
             onClick={() => router.push("/dashboard")}
           >
             Go to Dashboard
           </button>
-        )}
+        </SignedIn>
       </div>
-    </>
+    </div>
   );
 }

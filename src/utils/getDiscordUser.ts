@@ -6,13 +6,15 @@ export async function getDiscordUser() {
 
   const user = await clerkClient.users.getUser(userId);
 
-  // Find the Discord external account, if any
   const discordAccount = user.externalAccounts.find(
-    (acc) => acc.provider === "oauth_discord"
+    (acc) => acc.provider === "oauth_discord",
   );
 
   return {
-    user,
+    user: {
+      username: user.username ?? null,
+      firstName: user.firstName ?? null,
+    },
     discordId: discordAccount?.providerUserId ?? null,
     discordUsername: discordAccount?.username ?? null,
   };
