@@ -22,37 +22,55 @@ export default function EditSetupCard({ setup }: { setup: any }) {
   }
 
   return (
-    <Card className="flex flex-col">
+    <Card className="w-full min-h-[60vh] flex flex-col shadow-lg">
       <CardHeader>
-        <CardTitle>{setup.side} Setup</CardTitle>
+        <CardTitle className="text-2xl mb-2 maps__title">{setup.side} Setup</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-4">
-        <label className="font-semibold">Description</label>
-        <Textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Describe the default setup..."
-          rows={4}
-        />
-        <label className="font-semibold">Image</label>
-        {imageUrl && (
-          <img
-            src={imageUrl}
-            alt={`${setup.side} setup`}
-            className="w-full rounded border mt-2"
-          />
-        )}
-        <UploadButton
-          endpoint="setupImage"
-          onClientUploadComplete={(res) => {
-            if (res && res[0]?.url) setImageUrl(res[0].url);
-          }}
-          onUploadError={(error) => alert(`Upload failed: ${error.message}`)}
-        />
-        <Button onClick={handleSave} disabled={saving}>
-          {saving ? "Saving..." : "Save"}
-        </Button>
-        {success && <span className="text-green-600">Saved!</span>}
+      <CardContent className="flex-1 flex flex-col md:flex-row gap-8 h-full">
+        {/* Description section */}
+        <section className="md:w-1/2 w-full flex flex-col flex-1 h-full maps__description">
+          <label className="block text-lg font-semibold mb-2">Description</label>
+          <div className="flex-1 flex flex-col">
+            <Textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Describe the default setup..."
+              className="resize-none h-full min-h-[300px] max-h-[calc(60vh-80px)] flex-1 overflow-y-auto"
+              rows={16}
+            />
+            <div className="mt-4">
+              <Button onClick={handleSave} disabled={saving} className="w-full">
+                {saving ? "Saving..." : "Save"}
+              </Button>
+              {success && <span className="text-green-600 ml-2">Saved!</span>}
+            </div>
+          </div>
+        </section>
+        {/* Image and upload section */}
+        <section className="md:w-1/2 w-full flex flex-col gap-6 items-center justify-start maps__image">
+          <div className="w-full">
+            <label className="block text-lg font-semibold mb-2">Image</label>
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={`${setup.side} setup`}
+                className="w-full rounded border mb-4 max-h-80"
+              />
+            ) : (
+              <div className="w-full h-40 bg-gray-100 flex items-center justify-center text-gray-400 rounded mb-4">
+                No image uploaded
+              </div>
+            )}
+            <UploadButton
+              endpoint="setupImage"
+              onClientUploadComplete={(res) => {
+                if (res && res[0]?.url) setImageUrl(res[0].url);
+              }}
+              onUploadError={(error) => alert(`Upload failed: ${error.message}`)}
+              className="cursor-pointer"
+            />
+          </div>
+        </section>
       </CardContent>
     </Card>
   );
