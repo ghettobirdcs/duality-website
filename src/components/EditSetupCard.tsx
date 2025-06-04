@@ -22,14 +22,18 @@ export default function EditSetupCard({ setup }: { setup: any }) {
   }
 
   return (
-    <Card className="w-full min-h-[60vh] flex flex-col shadow-lg">
+    <Card className="w-full min-h-[60vh] flex flex-col shadow-lg maps__card">
       <CardHeader>
-        <CardTitle className="text-2xl mb-2 maps__title">{setup.side} Setup</CardTitle>
+        <CardTitle className="text-2xl mb-2 maps__title">
+          {setup.side} Setup
+        </CardTitle>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col md:flex-row gap-8 h-full">
         {/* Description section */}
         <section className="md:w-1/2 w-full flex flex-col flex-1 h-full maps__description">
-          <label className="block text-lg font-semibold mb-2">Description</label>
+          <label className="block text-lg font-semibold mb-2">
+            Description
+          </label>
           <div className="flex-1 flex flex-col">
             <Textarea
               value={description}
@@ -66,7 +70,9 @@ export default function EditSetupCard({ setup }: { setup: any }) {
               onClientUploadComplete={(res) => {
                 if (res && res[0]?.url) setImageUrl(res[0].url);
               }}
-              onUploadError={(error) => alert(`Upload failed: ${error.message}`)}
+              onUploadError={(error) =>
+                alert(`Upload failed: ${error.message}`)
+              }
               className="cursor-pointer"
             />
           </div>

@@ -163,6 +163,15 @@ h1 {
   margin-top: 0;
 }
 
+.maps__header {
+  padding-top: 12px;
+  text-align: center;
+}
+
+.maps__card {
+  margin-bottom: 32px;
+}
+
 .maps__description,
 .maps__title {
   padding-left: 24px;

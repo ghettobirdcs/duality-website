@@ -12,8 +12,8 @@ export default async function MapPage({
 
   return (
     <main className="flex flex-col items-center px-4 sm:px-8 lg:px-24 py-6 min-h-screen">
-      <h1 className="text-3xl font-bold mb-8 w-full max-w-7xl mx-auto">{mapWithSetups.name}</h1>
-      <div className="flex flex-col gap-8 w-full max-w-7xl">
+      <h1 className="text-3xl font-bold mb-8 w-full max-w-7xl mx-auto maps__header">{mapWithSetups.name}</h1>
+      <div className="flex flex-col w-full max-w-7xl">
         {mapWithSetups.setups.map((setup) => (
           <EditSetupCard key={setup.side} setup={setup} />
         ))}
