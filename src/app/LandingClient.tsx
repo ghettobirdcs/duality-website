@@ -41,7 +41,7 @@ export default function LandingClient() {
         <div className="landing-box">
           <h1>
             {isSignedIn
-              ? `Welcome, ${user?.username ?? user?.firstName ?? "user"}`
+              ? `Welcome, ${user?.discordUsername ?? user?.username ?? user?.firstName ?? "user"}`
               : "Welcome to the Duality HUB"}
           </h1>
           {!isSignedIn ? (

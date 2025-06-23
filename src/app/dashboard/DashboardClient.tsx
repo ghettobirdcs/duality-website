@@ -25,7 +25,6 @@ export default function DashboardClient({
   const [loading, setLoading] = useState(false);
   const [players, setPlayers] = useState(playerList);
 
-  // TODO: Restrict backend as well
   const canEdit = isAdmin(user?.externalAccounts[0]?.providerUserId);
 
   const inputRef = useRef<HTMLInputElement>(null);

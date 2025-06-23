@@ -19,15 +19,13 @@ export default async function DashboardPage() {
   // Fetch the current Clerk user
   const user = await currentUser();
 
-  // Try to get Discord info from Clerk's external accounts
-  // This assumes you have Discord as an OAuth provider in Clerk
   const discordAccount = user?.externalAccounts?.find(
-    (acc) => acc.provider === "oauth_discord"
+    (acc) => acc.provider === "oauth_discord",
   );
   const discordId = discordAccount?.externalId;
   const discordUsername =
     discordAccount?.username || user?.username || user?.firstName || "unknown";
-  const discordAvatar = discordAccount?.avatarUrl || user?.imageUrl || null;
+  const discordAvatar = user?.imageUrl || null;
 
   // Insert player if not already in DB
   if (discordId) {
@@ -41,6 +39,14 @@ export default async function DashboardPage() {
         discordId,
         discordUsername,
         discordAvatar,
+      });
+
+      // TODO: Update base url env with Vercel url
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/update-discord-id`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ discordId }),
+        credentials: "include",
       });
     }
   }
