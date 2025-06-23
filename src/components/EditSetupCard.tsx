@@ -21,6 +21,17 @@ export default function EditSetupCard({ setup }: { setup: any }) {
     setTimeout(() => setSuccess(false), 2000);
   }
 
+  async function handleImageUpload(res: any) {
+    if (res && res[0]?.url) {
+      setImageUrl(res[0].url);
+      setSaving(true);
+      await updateSetup(setup.id, { description, imageUrl: res[0].url });
+      setSaving(false);
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 2000);
+    }
+  }
+
   return (
     <Card className="w-full min-h-[60vh] flex flex-col shadow-lg maps__card">
       <CardHeader>
@@ -67,9 +78,7 @@ export default function EditSetupCard({ setup }: { setup: any }) {
             )}
             <UploadButton
               endpoint="setupImage"
-              onClientUploadComplete={(res) => {
-                if (res && res[0]?.url) setImageUrl(res[0].url);
-              }}
+              onClientUploadComplete={handleImageUpload}
               onUploadError={(error) =>
                 alert(`Upload failed: ${error.message}`)
               }
