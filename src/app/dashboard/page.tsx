@@ -24,7 +24,7 @@ export default async function DashboardPage() {
   const discordAccount = user?.externalAccounts?.find(
     (acc) => acc.provider === "oauth_discord"
   );
-  const discordId = discordAccount?.providerUserId;
+  const discordId = discordAccount?.externalId;
   const discordUsername =
     discordAccount?.username || user?.username || user?.firstName || "unknown";
   const discordAvatar = discordAccount?.avatarUrl || user?.imageUrl || null;
