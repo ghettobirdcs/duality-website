@@ -5,8 +5,9 @@ import Link from "next/link";
 
 interface Player {
   id: number;
-  name: string;
   discordId: string;
+  discordUsername: string;
+  discordAvatar: string;
   role?: string | null;
 }
 

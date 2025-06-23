@@ -7,9 +7,10 @@ import {
 
 export const players = sqliteTable("players", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  name: text("name").notNull(),
   discordId: text("discord_id").notNull().unique(),
-  role: text("role"), // optional: e.g. entry, support
+  discordUsername: text("discord_username").notNull(),
+  discordAvatar: text("discord_avatar").notNull(),
+  role: text("role"), // TODO: Get player role from discord
 });
 
 export const maps = sqliteTable("maps", {

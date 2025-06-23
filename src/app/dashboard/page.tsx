@@ -3,17 +3,46 @@ import DashboardClient from "./DashboardClient";
 import Spinner from "@/components/Spinner";
 import { db } from "@/db/client";
 import { players } from "@/db/schema";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
+import { eq } from "drizzle-orm";
 
 export default async function DashboardPage() {
   const { userId } = await auth();
   if (!userId) {
-    // Clerk middleware should handle redirect, but fallback just in case
     return (
       <div className="fullpage-center">
         <div className="header-box">Please sign in.</div>
       </div>
     );
+  }
+
+  // Fetch the current Clerk user
+  const user = await currentUser();
+
+  // Try to get Discord info from Clerk's external accounts
+  // This assumes you have Discord as an OAuth provider in Clerk
+  const discordAccount = user?.externalAccounts?.find(
+    (acc) => acc.provider === "oauth_discord"
+  );
+  const discordId = discordAccount?.providerUserId;
+  const discordUsername =
+    discordAccount?.username || user?.username || user?.firstName || "unknown";
+  const discordAvatar = discordAccount?.avatarUrl || user?.imageUrl || null;
+
+  // Insert player if not already in DB
+  if (discordId) {
+    const existing = await db
+      .select()
+      .from(players)
+      .where(eq(players.discordId, discordId))
+      .get();
+    if (!existing) {
+      await db.insert(players).values({
+        discordId,
+        discordUsername,
+        discordAvatar,
+      });
+    }
   }
 
   const playerList = await db.select().from(players);
