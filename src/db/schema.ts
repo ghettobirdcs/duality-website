@@ -2,7 +2,6 @@ import {
   sqliteTable,
   text,
   integer,
-  foreignKey,
 } from "drizzle-orm/sqlite-core";
 
 export const players = sqliteTable("players", {
