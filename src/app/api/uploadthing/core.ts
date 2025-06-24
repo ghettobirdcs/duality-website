@@ -6,7 +6,7 @@ const f = createUploadthing();
 
 export const ourFileRouter = {
   setupImage: f({ image: { maxFileSize: "4MB" } })
-    .middleware(async ({ req }) => {
+    .middleware(async () => {
       const { userId } = await auth();
       if (!userId) throw new Error("Unauthorized");
 
@@ -19,7 +19,7 @@ export const ourFileRouter = {
       return {};
     })
     .onUploadComplete(async ({ file }) => {
-      return { uploadedUrl: file.url };
+      return { uploadedUrl: file.ufsUrl };
     }),
 } satisfies FileRouter;
 

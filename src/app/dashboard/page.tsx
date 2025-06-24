@@ -28,6 +28,7 @@ export default async function DashboardPage() {
     discordAccount?.username || user?.username || user?.firstName || "unknown";
   const discordAvatar = user?.imageUrl || null;
 
+  // TODO: Only insert players on A Team
   // Insert player if not already in DB
   if (discordId) {
     const existing = db

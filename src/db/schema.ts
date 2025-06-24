@@ -9,7 +9,7 @@ export const players = sqliteTable("players", {
   discordId: text("discord_id").notNull().unique(),
   discordUsername: text("discord_username").notNull(),
   discordAvatar: text("discord_avatar"),
-  role: text("role"), // TODO: Get player role from discord
+  role: text("role"),
 });
 
 export const maps = sqliteTable("maps", {
