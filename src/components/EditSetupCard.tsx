@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { updateSetup } from "@/app/actions/updateSetup";
 import { UploadButton } from "@uploadthing/react";
+import type { OurFileRouter } from "@/app/api/uploadthing/core";
 
 export default function EditSetupCard({ setup }: { setup: any }) {
   const [description, setDescription] = useState(setup.description);
@@ -14,7 +15,12 @@ export default function EditSetupCard({ setup }: { setup: any }) {
 
   async function handleSave() {
     setSaving(true);
-    await updateSetup(setup.id, { description, imageUrl });
+    await updateSetup(setup.id, {
+      mapId: setup.mapId,
+      side: setup.side,
+      description,
+      imageUrl,
+    });
     setSaving(false);
     setSuccess(true);
     setTimeout(() => setSuccess(false), 2000);
@@ -24,7 +30,12 @@ export default function EditSetupCard({ setup }: { setup: any }) {
     if (res && res[0]?.url) {
       setImageUrl(res[0].url);
       setSaving(true);
-      await updateSetup(setup.id, { description, imageUrl: res[0].url });
+      await updateSetup(setup.id, {
+        mapId: setup.mapId,
+        side: setup.side,
+        description,
+        imageUrl: res[0].url,
+      });
       setSaving(false);
       setSuccess(true);
       setTimeout(() => setSuccess(false), 2000);
@@ -75,11 +86,13 @@ export default function EditSetupCard({ setup }: { setup: any }) {
                 No image uploaded
               </div>
             )}
-            <UploadButton
+            <UploadButton<OurFileRouter, "setupImage">
               endpoint="setupImage"
               onClientUploadComplete={handleImageUpload}
-              onUploadError={(error) =>
-                alert(`Upload failed: ${error.message}`)
+              onUploadError={(error: unknown) =>
+                alert(
+                  `Upload failed: ${error instanceof Error ? error.message : String(error)}`,
+                )
               }
               className="cursor-pointer"
             />

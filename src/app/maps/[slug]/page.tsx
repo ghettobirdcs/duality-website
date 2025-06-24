@@ -15,6 +15,7 @@ export default async function MapPage({
     (side) =>
       mapWithSetups?.setups?.find((s: any) => s.side === side) ?? {
         id: undefined, // id is undefined for new setups, updateSetup can handle this
+        mapId: mapWithSetups?.id,
         side,
         description: "",
         imageUrl: "",
