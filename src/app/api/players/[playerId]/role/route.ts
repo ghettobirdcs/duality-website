@@ -8,7 +8,7 @@ import { eq } from "drizzle-orm";
 export async function PATCH(
   request: NextRequest,
   { params }: { params: { playerId: string } },
-): Promise<NextResponse> {
+) {
   const { userId } = await auth();
 
   if (!userId) {
