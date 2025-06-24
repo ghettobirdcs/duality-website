@@ -215,6 +215,13 @@ h1 {
   padding-right: 24px;
 }
 
+.maps__back-button {
+  width: 100%;
+  margin: 0 auto;
+  margin: 12px 0 12px 24px;
+  display: flex;
+}
+
 /* @theme inline { */
 /*   --radius-sm: calc(var(--radius) - 4px); */
 /*   --radius-md: calc(var(--radius) - 2px); */
