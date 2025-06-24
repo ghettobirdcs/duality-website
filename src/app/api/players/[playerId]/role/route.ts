@@ -7,7 +7,7 @@ import { eq } from "drizzle-orm";
 
 export async function PATCH(
   req: NextRequest,
-  context: { params: { playerId: string } } | Promise<{ params: { playerId: string } }>
+  context: { params: { playerId: string } },
 ): Promise<NextResponse> {
   const { userId } = await auth();
 
@@ -32,7 +32,10 @@ export async function PATCH(
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
   }
 
-  await db.update(players).set({ role }).where(eq(players.id, Number(playerId)));
+  await db
+    .update(players)
+    .set({ role })
+    .where(eq(players.id, Number(playerId)));
 
   return NextResponse.json({ success: true });
 }
