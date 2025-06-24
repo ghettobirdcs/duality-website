@@ -5,6 +5,7 @@ import { db } from "@/db/client";
 import { players } from "@/db/schema";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
+import { updateDiscordId } from "@/lib/update-clerk-metadata";
 
 export default async function DashboardPage() {
   const { userId } = await auth();
@@ -29,7 +30,7 @@ export default async function DashboardPage() {
 
   // Insert player if not already in DB
   if (discordId) {
-    const existing = await db
+    const existing = db
       .select()
       .from(players)
       .where(eq(players.discordId, discordId))
@@ -41,13 +42,7 @@ export default async function DashboardPage() {
         discordAvatar,
       });
 
-      // TODO: Update base url env with Vercel url
-      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/update-discord-id`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ discordId }),
-        credentials: "include",
-      });
+      await updateDiscordId(userId, discordId);
     }
   }
 

@@ -9,7 +9,7 @@ interface Player {
   id: number;
   discordId: string;
   discordUsername: string;
-  discordAvatar: string;
+  discordAvatar: string | null;
   role?: string | null;
 }
 

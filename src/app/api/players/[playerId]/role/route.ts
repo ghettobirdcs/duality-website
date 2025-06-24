@@ -7,15 +7,18 @@ import { eq } from "drizzle-orm";
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { playerId: string } },
-) {
+  context: { params: { playerId: string } } | Promise<{ params: { playerId: string } }>
+): Promise<NextResponse> {
   const { userId } = await auth();
 
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const client = await clerkClient()
+  const { params } = await Promise.resolve(context);
+  const { playerId } = await params;
+
+  const client = await clerkClient();
   const user = await client.users.getUser(userId);
   const discordId = user.publicMetadata?.discordId as string;
 
@@ -24,7 +27,6 @@ export async function PATCH(
   }
 
   const { role } = await req.json();
-  const { playerId } = params;
 
   if (!playerId || typeof role !== "string") {
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
