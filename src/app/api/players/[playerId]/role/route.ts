@@ -6,8 +6,8 @@ import { players } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function PATCH(
-  req: NextRequest,
-  context: { params: { playerId: string } },
+  request: NextRequest,
+  { params }: { params: { playerId: string } },
 ): Promise<NextResponse> {
   const { userId } = await auth();
 
@@ -15,7 +15,6 @@ export async function PATCH(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { params } = await Promise.resolve(context);
   const { playerId } = await params;
 
   const client = await clerkClient();
@@ -26,7 +25,7 @@ export async function PATCH(
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const { role } = await req.json();
+  const { role } = await request.json();
 
   if (!playerId || typeof role !== "string") {
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
