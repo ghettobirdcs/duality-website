@@ -7,15 +7,15 @@ import { eq } from "drizzle-orm";
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { playerId: string } },
-) {
+  context: { params: { playerId: string } },
+): Promise<NextResponse> {
   const { userId } = await auth();
 
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { playerId } = await params;
+  const { playerId } = context.params;
 
   const client = await clerkClient();
   const user = await client.users.getUser(userId);
