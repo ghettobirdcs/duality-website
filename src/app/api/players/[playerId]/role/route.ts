@@ -1,12 +1,12 @@
 import { auth, clerkClient } from "@clerk/nextjs/server";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { isAdmin } from "@/lib/utils";
 import { db } from "@/db/client";
 import { players } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function PATCH(
-  request: NextRequest,
+  request: Request,
   context: { params: { playerId: string } },
 ): Promise<NextResponse> {
   const { userId } = await auth();
